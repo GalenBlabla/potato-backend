@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+aiohttp
+beautifulsoup4
+pycryptodome
+pydantic
