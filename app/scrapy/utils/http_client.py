@@ -1,7 +1,7 @@
-# app/scraper/http_client.py
 import aiohttp
 from bs4 import BeautifulSoup
 from fastapi import HTTPException
+
 
 class HttpClient:
     async def fetch(self, url: str) -> str:
