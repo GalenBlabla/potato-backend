@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List
+
+from app.models.notice_models import Announcement
 from app.scrapy.home_service import HomeService, VideoItem
 
 router = APIRouter()
@@ -14,3 +16,8 @@ async def get_carousel_videos(home_service: HomeService = Depends()):
 @router.get("/recommended_videos", response_model=List[VideoItem])
 async def get_recommended_videos(home_service: HomeService = Depends()):
     return await home_service.get_recommended_videos()
+
+
+@router.get("/announcements", response_model=List[Announcement])
+async def get_announcements(home_service: HomeService = Depends()):
+    return home_service.get_announcements()

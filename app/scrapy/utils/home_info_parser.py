@@ -35,7 +35,7 @@ class HomeInfoParser:
 
                 videos.append({
                     'title': title,
-                    'link': self.base_url + link,
+                    'link' :  link,
                     'image': image_url
                 })
         except Exception as e:
@@ -85,7 +85,7 @@ class HomeInfoParser:
 
                     videos.append({
                         'title': title,
-                        'link': self.base_url + link,
+                        'link': link,
                         'image': image,
                         'description': description
                     })

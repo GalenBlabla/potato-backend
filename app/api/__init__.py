@@ -31,3 +31,6 @@ router.include_router(
 router.include_router(
     home.router, prefix="/home", tags=["Home"], dependencies=[Depends(get_home_service)]
 )
+router.include_router(
+    home.router, prefix="/home", tags=["Home"], dependencies=[Depends(get_home_service)]
+)
