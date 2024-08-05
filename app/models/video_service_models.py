@@ -14,6 +14,10 @@ class VideoItem(BaseModel):
     thumbnail: Optional[str] = Field(default="N/A", description="Thumbnail image URL")
 
 
+class HtmlContentRequest(BaseModel):
+    html_content: str
+
+
 class Episode(BaseModel):
     name: str
     url: str

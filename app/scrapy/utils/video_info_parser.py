@@ -6,8 +6,6 @@ from fastapi import HTTPException
 
 
 class VideoInfoParser:
-    def __init__(self, base_url: str):
-        self.BASE_URL = base_url
 
     def parse_video_list(self, soup: BeautifulSoup) -> List[Dict]:
         parent_div = soup.find('div', class_='stui-pannel_bd')
@@ -77,8 +75,7 @@ class VideoInfoParser:
         playlists = soup.find_all('div', class_='tab-pane fade in clearfix')
         for idx, playlist in enumerate(playlists, start=1):
             line_name = f"线路{idx}"
-            episode_links = [{"name": a.get_text(strip=True), "url": f"{self.BASE_URL}{a['href']}"} for a in
-                             playlist.find_all('a', href=True) if '/play/' in a['href']]
+            episode_links = [{"name": a.get_text(strip=True), "url": a['href']} for a in playlist.find_all('a', href=True) if '/play/' in a['href']]
             episodes[line_name] = episode_links
         return episodes
 

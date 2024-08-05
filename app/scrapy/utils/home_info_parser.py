@@ -4,8 +4,6 @@ from typing import List, Dict
 
 
 class HomeInfoParser:
-    def __init__(self, base_url: str):
-        self.base_url = base_url
 
     def parse_carousel_videos(self, soup: BeautifulSoup) -> List[Dict]:
         """
@@ -35,7 +33,7 @@ class HomeInfoParser:
 
                 videos.append({
                     'title': title,
-                    'link' :  link,
+                    'link': link,
                     'image': image_url
                 })
         except Exception as e:
@@ -46,21 +44,14 @@ class HomeInfoParser:
 
     def parse_recommended_videos(self, soup: BeautifulSoup) -> List[Dict]:
         """
-        解析热播动漫推荐列表中的视频信息。
+        解析首页推荐列表中的视频信息。每12个一组
         :param soup: BeautifulSoup 对象的首页内容。
         :return: 包含视频信息（标题、链接、图片、简介）的字典列表。
         """
         videos = []
 
         try:
-            # 查找推荐列表容器 movie1
-            recommended_section1 = soup.find('div', {'id': 'movie1'})
-            videos += self._parse_video_list(recommended_section1)
-
-            # 查找推荐列表容器 movie2
-            recommended_section2 = soup.find('div', {'id': 'movie2'})
-            videos += self._parse_video_list(recommended_section2)
-
+            videos += self._parse_video_list(soup)
         except Exception as e:
             print(f"解析热播动漫推荐列表失败: {str(e)}")
             raise e
@@ -75,20 +66,27 @@ class HomeInfoParser:
         """
         videos = []
         try:
-            if section:
-                video_items = section.find_all('li', class_='col-md-6')
-                for item in video_items:
-                    title = item.find('a', class_='stui-vodlist__thumb')['title']
-                    link = item.find('a', class_='stui-vodlist__thumb')['href']
-                    image = item.find('a', class_='stui-vodlist__thumb')['data-original']
-                    description = item.find('p', class_='text text-overflow text-muted hidden-xs').get_text(strip=True)
+            # 查找所有的li元素，每个li表示一个视频项
+            video_items = section.find_all('li', class_='col-md-6')
 
-                    videos.append({
-                        'title': title,
-                        'link': link,
-                        'image': image,
-                        'description': description
-                    })
+            for item in video_items:
+                title_tag = item.find('a', class_='stui-vodlist__thumb')
+                detail_tag = item.find('div', class_='stui-vodlist__detail')
+                # 获取标题和链接
+                title = title_tag['title']
+                link = title_tag['href']
+                # 获取图片URL
+                image = title_tag['data-original']
+                # 获取简介
+                description = detail_tag.find('p', class_='text text-overflow text-muted hidden-xs').get_text(
+                    strip=True)
+
+                videos.append({
+                    'title': title,
+                    'link': link,
+                    'image': image,
+                    'description': description
+                })
         except Exception as e:
             print(f"解析视频列表失败: {str(e)}")
             raise e
