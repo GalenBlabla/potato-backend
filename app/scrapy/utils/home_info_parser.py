@@ -5,16 +5,14 @@ from typing import List, Dict
 
 class HomeInfoParser:
 
-    def parse_carousel_videos(self, soup: BeautifulSoup) -> List[Dict]:
+    def parse_carousel_videos(self, html_content: BeautifulSoup) -> List[Dict]:
         """
         解析首页滚动条中的视频信息。
-        :param soup: 首页的 BeautifulSoup 对象。
-        :return: 包含视频信息（标题、图片和链接）的字典列表。
         """
         videos = []
         try:
             # 查找滚动条容器
-            carousel = soup.find('div', class_='carousel')
+            carousel = html_content.find('div', class_='carousel')
             if not carousel:
                 raise ValueError("未在首页找到滚动条。")
 
@@ -42,32 +40,28 @@ class HomeInfoParser:
 
         return videos
 
-    def parse_recommended_videos(self, soup: BeautifulSoup) -> List[Dict]:
+    def parse_page_total_videos(self, html_content: BeautifulSoup) -> List[Dict]:
         """
         解析首页推荐列表中的视频信息。每12个一组
-        :param soup: BeautifulSoup 对象的首页内容。
-        :return: 包含视频信息（标题、链接、图片、简介）的字典列表。
         """
         videos = []
 
         try:
-            videos += self._parse_video_list(soup)
+            videos += self._parse_video_list(html_content)
         except Exception as e:
             print(f"解析热播动漫推荐列表失败: {str(e)}")
             raise e
 
         return videos
 
-    def _parse_video_list(self, section: BeautifulSoup) -> List[Dict]:
+    def _parse_video_list(self, html_content: BeautifulSoup) -> List[Dict]:
         """
         解析给定推荐列表中的视频信息。
-        :param section: 推荐列表的 BeautifulSoup 对象。
-        :return: 包含视频信息（标题、链接、图片、简介）的字典列表。
         """
         videos = []
         try:
             # 查找所有的li元素，每个li表示一个视频项
-            video_items = section.find_all('li', class_='col-md-6')
+            video_items = html_content.find_all('li', class_='col-md-6')
 
             for item in video_items:
                 title_tag = item.find('a', class_='stui-vodlist__thumb')
@@ -92,3 +86,42 @@ class HomeInfoParser:
             raise e
 
         return videos
+
+    def get_total_pages(self, html_content: BeautifulSoup) -> Dict:
+        pagination = html_content.find('ul', class_='stui-page text-center clearfix')
+        if not pagination:
+            return {
+                'total_pages': 'failed'
+            }
+
+        last_page_link = pagination.find_all('a')[-1]['href']
+        match = re.search(r'-(\d+)', last_page_link)
+
+        if match:
+            return {
+                'total_pages': int(match.group(1))
+            }
+        else:
+            return {
+                'total_pages': 'failed'
+            }
+
+    def extract_year_list(self, html_content: BeautifulSoup) -> List[Dict]:
+        pannel_hd = html_content.find('div', class_='stui-pannel_hd')
+        if not pannel_hd:
+            raise ValueError("未找到 'stui-pannel_hd' 组件。")
+
+        screen_lists = pannel_hd.find_all('ul', class_='stui-screen__list')
+        year_list = []
+        for screen_list in screen_lists:
+            if screen_list.find('span', class_='text-muted') and '按年份' in screen_list.find('span',
+                                                                                              'text-muted').text:
+                for li in screen_list.find_all('li'):
+                    a_tag = li.find('a')
+                    if a_tag:
+                        link = a_tag['href']
+                        text = a_tag.get_text(strip=True)
+                        year_list.append({'year': text, 'link': link})
+                break
+
+        return year_list

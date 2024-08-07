@@ -41,3 +41,12 @@ class DecryptedURLResponse(BaseModel):
 
 class EpisodeInfoResponse(BaseModel):
     video_source: str
+
+
+class YearItem(BaseModel):
+    year: str = Field(..., description="年份")
+    link: str = Field(..., description="该年份视频的链接")
+
+
+class TotalPages(BaseModel):
+    total_pages: int = Field(..., description="总页数")

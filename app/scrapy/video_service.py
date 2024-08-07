@@ -24,7 +24,6 @@ class VideoService:
 
     async def search(self, html_content: str) -> List[Dict]:
         soup = await self.parse_video_page(html_content)
-        # print("soup", soup)
         return self.video_info_parser.parse_video_list(soup)
 
     async def get_video_info(self, html_content: str) -> Dict:
