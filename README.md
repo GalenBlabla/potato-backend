@@ -22,7 +22,7 @@
 2. 进入项目目录
 
     ```bash
-    cd Potato-Backend
+    cd potato-backend
     ```
 
 3. 安装依赖
