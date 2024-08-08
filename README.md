@@ -11,12 +11,12 @@
 
 ## 快速开始
 
-按照以下步骤克隆并运行 Potato 爬虫后端：
+按照以下步骤克隆并运行 potato 爬虫后端：
 
 1. 克隆代码仓库
 
     ```bash
-    git clone https://github.com/GalenBlabla/Potato-Backend.git
+    git clone https://github.com/GalenBlabla/potato-backend.git
     ```
 
 2. 进入项目目录
