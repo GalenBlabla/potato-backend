@@ -1,4 +1,4 @@
-# Potato-backend 爬虫后端
+# Potato-Backend 爬虫后端
 
 **Potato-Backend** 服务于[Potato](https://github.com/GalenBlabla/Potato) ，是一个采用分布式爬虫思想的项目，旨在实现高效的网页数据抓取。该项目的后端部分主要负责处理前端传送的 HTML 数据，而爬虫的请求是由客户端直接发送。
 
