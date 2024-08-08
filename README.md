@@ -49,7 +49,7 @@
 
 ## 贡献
 
-如果您对 Potato 项目感兴趣并希望做出贡献，请按照以下步骤进行：
+如果您对 potato 项目感兴趣并希望做出贡献，请按照以下步骤进行：
 
 1. Fork 本仓库
 2. 创建您的分支 (`git checkout -b feature/new-feature`)
