@@ -47,4 +47,14 @@
 
 前端可以通过 HTTP POST 请求将抓取到的 HTML 数据发送到后端指定的 API 接口进行处理。后端会解析并处理这些数据，然后返回结果。
 
+## 贡献
 
+如果您对 Potato 项目感兴趣并希望做出贡献，请按照以下步骤进行：
+
+1. Fork 本仓库
+2. 创建您的分支 (`git checkout -b feature/new-feature`)
+3. 提交您的修改 (`git commit -am 'Add some feature'`)
+4. 推送到分支 (`git push origin feature/new-feature`)
+5. 创建一个新的 Pull Request
+
+感谢您的贡献！
