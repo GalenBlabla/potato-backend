@@ -11,6 +11,11 @@ class HomeService:
         self.home_info_parser = HomeInfoParser()
         self.announcements = [
             Announcement(
+                title="公告：本项目已开源",
+                content="开源地址：https://github.com/GalenBlabla/potato，可自行访问并下载最新发布版本！",
+                date="2024-08-09"
+            ),
+            Announcement(
                 title="公告：当前软件存在已知问题",
                 content="切换视频不要过快，当一个视频还没有加载出画面的时候立马切换到下一个视频或者退出当前页面，该视频会变成僵尸视频一直在后台播放。退出软件才能关。"
                         "资源页面的翻页还没那么丝滑。",
